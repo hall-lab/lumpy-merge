@@ -492,7 +492,7 @@ def merge(BP, sample_order, v_id, use_product):
 
         if SVTYPE=='DEL':
             SVLEN = (new_start_L + max_i_L) - (new_start_R + max_i_R)
-        else:
+        elif SVTYPE=='DUP' or SVTYPE=='INV':
             SVLEN = (new_start_R + max_i_R) - (new_start_L + max_i_L)
         END = new_start_R + max_i_R
         CIPOS=','.join([str(x) for x in [-1*max_i_L, len(p_L) - max_i_L - 1]])
@@ -501,10 +501,8 @@ def merge(BP, sample_order, v_id, use_product):
         PRPOS=','.join([str(x) for x in p_L])
         PREND=','.join([str(x) for x in p_R])
 
-
         I = ['SVTYPE='   + str(SVTYPE),
              'STRANDS='  + str(STRANDS),
-             'SVLEN='    + str(SVLEN),
              'CIPOS='    + str(CIPOS),
              'CIEND='    + str(CIEND),
              'CIPOS95='  + str(CIPOS95),
@@ -521,6 +519,7 @@ def merge(BP, sample_order, v_id, use_product):
         if BP[c[0]].sv_type == 'BND':
             I.append('EVENT=' + str(ID))
         else:
+            I.append('SVLEN=' + str(SVLEN))
             I.append('END=' + str(END))
 
         INFO = ';'.join(I)
